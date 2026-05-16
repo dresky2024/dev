@@ -23,4 +23,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: dresky2024/my-awesome-site:latest
+        tags: xxnb22/my-awesome-site:latest
