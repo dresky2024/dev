@@ -1,18 +1,26 @@
-name: DevOps Build Check
+name: DevOps Build and Push to Docker Hub
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build-and-test:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
     - name: Проверяем код репозитория
       uses: actions/checkout@v4
 
-    - name: Собираем тестовый Docker-образ
-      run: |
-        docker build -t test-image .
-        echo "Сборка образа прошла успешно!"
+    - name: Авторизация в Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Сборка и отправка образа в Docker Hub
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: dresky2024/my-awesome-site:latest
