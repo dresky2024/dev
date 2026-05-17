@@ -31,6 +31,7 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO_RECIPIENT }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
+        host: api.telegram-proxy.org
         message: |
           🚀 Сборка XXNB успешно завершена!
           Репозиторий: ${{ github.repository }}
@@ -43,6 +44,7 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO_RECIPIENT }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
+        host: api.telegram-proxy.org
         message: |
           ❌ Внимание! Пайплайн XXNB СЛОМАЛСЯ!
           Репозиторий: ${{ github.repository }}
