@@ -24,3 +24,27 @@ jobs:
         context: .
         push: true
         tags: xxnb22/my-awesome-site:latest
+
+    - name: Уведомление об успехе в Telegram
+      if: success()
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO_RECIPIENT }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          🚀 Сборка XXNB успешно завершена!
+          Репозиторий: ${{ github.repository }}
+          Коммит: ${{ github.event.head_commit.message }}
+          Новый Docker-образ уже в облаке.
+
+    - name: Уведомление об ОШИБКЕ в Telegram
+      if: failure()
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO_RECIPIENT }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ❌ Внимание! Пайплайн XXNB СЛОМАЛСЯ!
+          Репозиторий: ${{ github.repository }}
+          Автор коммита: ${{ github.actor }}
+          Срочно проверьте логи GitHub Actions!

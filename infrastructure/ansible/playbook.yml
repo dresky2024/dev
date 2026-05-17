@@ -1,0 +1,21 @@
+---
+- name: Деплой нашего кастомного сайта через Ansible
+  hosts: my_servers
+  tasks:
+    - name: Проверяем, что в системе установлен Docker
+      ansible.builtin.command: docker --version
+      register: docker_check
+      changed_when: false
+
+    - name: Выводим версию Docker для информации
+      ansible.builtin.debug:
+        msg: "На сервере успешно найден {{ docker_check.stdout }}"
+
+    - name: Запускаем наш контейнер с сайта Docker Hub
+      community.docker.docker_container:
+        name: ansible-web-server
+        image: xxnb22/my-awesome-site:latest
+        state: started
+        restart_policy: always
+        published_ports:
+          - "9500:80"
